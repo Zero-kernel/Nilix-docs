@@ -1,6 +1,6 @@
 # Zero-OS Next-Phase Plan
 
-**Current:** [v16.4 — 2026-09-13](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/nextplan/next-phase-plan-2026-09-13.md)
+**Current:** [v16.11 — 2026-09-13 rollover, updated 2026-10-25](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/nextplan/next-phase-plan-2026-09-13.md)
 
 This complete rollover reconciles the September KSA closeout with the older
 admission, stress, design and feature backlog. Start here for priorities and
