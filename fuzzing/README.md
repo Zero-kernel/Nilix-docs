@@ -30,7 +30,7 @@ host-driven mutation loop remains future work (Phase 7.1-7.5).
 ## Quick Navigation
 
 ### 📖 Read First
-- **This index and the live [workflow](../../.github/workflows/fuzz.yml)** are the current operational reference.
+- **This index and the live [workflow](https://github.com/Zero-kernel/Nilix/blob/main/.github/workflows/fuzz.yml)** are the current operational reference.
 - Retired CI integration/refactoring notes are intentionally not operational references; their
   simulator, public-artifact, and reproducer-upload flows are unsafe.
 - **[PHASE7_COMPLETE.md](PHASE7_COMPLETE.md)** - Historical completion report, not current CI behavior

@@ -113,5 +113,5 @@ requirements. General Linux/glibc/pthread/OCI support is not established.
 
 Current tests and retained reports:
 [CI](ci-testing.md), [quality gates](quality-gates.md),
-[hosted allowlist](../scripts/tools/hosted_subcrate_tests.sh).
-Report vulnerabilities privately using [SECURITY.md](../SECURITY.md).
+[hosted allowlist](https://github.com/Zero-kernel/Nilix/blob/main/scripts/tools/hosted_subcrate_tests.sh).
+Report vulnerabilities privately using [SECURITY.md](https://github.com/Zero-kernel/Nilix/blob/main/SECURITY.md).

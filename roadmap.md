@@ -3,7 +3,7 @@
 **Revision:** 6.1 — **Updated:** 2026-09-14
 **Source baseline:** local 3.1–3.3 implementation working tree; exact final remote verification copy `/tmp/zero-os-codex-final-20260913` on `40c-devbox-ts`.
 
-**Active plan:** [next-phase-plan-2026-09-13.md](review/nextplan/next-phase-plan-2026-09-13.md) (v16.4).
+**Active plan:** [next-phase-plan-2026-09-13.md](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/nextplan/next-phase-plan-2026-09-13.md) (v16.4).
 
 Nilix is an experimental x86_64 OS kernel with UEFI boot, Ring-3 programs, a
 tested static-musl ABI subset, SMP scheduling, filesystems, IPv4 networking and
@@ -96,36 +96,36 @@ All 25 library crates are listed. A crate/API's presence is not a completion cla
 
 | Crate | Role | Qualification/gap |
 | --- | --- | --- |
-| [arch](../kernel/arch/lib.rs) | GDT/IDT, APIC/HPET, IRQs, SYSCALL, context switch, AP boot | UP/SMP evidence; high-core/physical/exception-entry breadth pending |
-| [cpu_local](../kernel/cpu_local/lib.rs) | CPU topology/local storage/FPU ownership | Borrowed lifetime API and TLS migration evidence; 64 CPUs is a ceiling |
-| [tlb_ops](../kernel/tlb_ops/lib.rs) | TLB/INVPCID primitives | Active MM/arch dependency; CPU-feature dependent |
-| [sync_safe](../kernel/sync_safe/lib.rs) | IRQ-safe lock wrappers | Dormant since R192-8: not linked into the kernel, so its debug check never runs |
-| [drivers](../kernel/drivers/lib.rs) | VGA/framebuffer, serial, keyboard | Basic console, not a desktop/device-driver ecosystem |
-| [virtio](../kernel/virtio/src/lib.rs) | Shared PCI/MMIO transport/queues | Block/network integration; ACCESS_PLATFORM/device breadth pending |
-| [crypto](../kernel/crypto/lib.rs) | Shared SHA-256 | Narrow primitive, not a general certified provider |
-| [klog](../kernel/klog/lib.rs) | Profile-aware logging | Active lint/macros; full caller/redaction sweep tracked |
-| [mm](../kernel/mm/lib.rs) | Buddy/heap/admission, paging/cache/DMA/OOM/TLB | Anonymous/COW paths; admission/shared/file-mapping gaps |
-| [coverage](../kernel/coverage/lib.rs) | KCOV task bitmap/control | Host-root authority/manual instrumentation; not exhaustive coverage |
-| [cap](../kernel/cap/lib.rs) | Rights, IDs, generations and tables | File/pipe lifecycle integration; native syscall family incomplete |
-| [audit](../kernel/audit/lib.rs) | Hash/HMAC ring and export | Policy/hosted evidence; durable production backend missing |
-| [security](../kernel/security/lib.rs) | W^X/NX, RNG/kptr/KASLR, CPU mitigations | Mechanism/status tests; full KPTI/retpoline unsupported |
-| [lsm](../kernel/lsm/lib.rs) | Process/file/IPC/memory/network hooks | Active policies; future-operation hooks do not implement operations |
-| [seccomp](../kernel/seccomp/lib.rs) | Strict/filter and pledge | Tested subset; TSYNC/Linux parity residuals |
-| [compliance](../kernel/compliance/lib.rs) | Profiles, sticky FIPS state/KAT policy | No certification or complete Secure-platform guarantee |
-| [livepatch](../kernel/livepatch/lib.rs) | Experimental signed patch/lifecycle machinery | Unsupported, ENOSYS; production enablement absent |
-| [block](../kernel/block/src/lib.rs) | Owned BIO/completion/geometry/virtio-blk | Host/guest 512B/4096B evidence; physical matrix pending |
-| [net](../kernel/net/src/lib.rs) | IPv4/TCP/UDP, sockets, conntrack/firewall, virtio-net | Container connectivity/IPv6/interoperability gaps |
-| [trace](../kernel/trace/lib.rs) | Counters/tracepoints/watchdog/profiler/kdump | Diagnostics exist; external collection/performance pending |
-| [iommu](../kernel/iommu/lib.rs) | DMAR/legacy VT-d/domains/remapping/quarantine | Q35/EDU scope tested; physical/topology gaps explicit |
-| [kernel_core](../kernel/kernel_core/lib.rs) | Process/ABI/namespaces/cgroups/signals/RCU/ELF | Active hub; resource/ABI/teardown backlog remains |
-| [vfs](../kernel/vfs/lib.rs) | Path/DAC/mounts, ramfs/ext2/JBD2/procfs/devfs/CPIO/cgroupfs | Tested publication/lifetime; durability/POSIX breadth missing |
-| [ipc](../kernel/ipc/lib.rs) | Pipes/endpoints/messages/futex/sync | Pipes/robust cleanup exercised; native IPC/Linux futex parity pending |
-| [sched](../kernel/sched/lib.rs) | Per-CPU MLFQ/preemption/stealing/affinity/cpuset | UP/four-CPU evidence; long/high-core/performance pending |
+| [arch](https://github.com/Zero-kernel/Nilix/blob/main/kernel/arch/lib.rs) | GDT/IDT, APIC/HPET, IRQs, SYSCALL, context switch, AP boot | UP/SMP evidence; high-core/physical/exception-entry breadth pending |
+| [cpu_local](https://github.com/Zero-kernel/Nilix/blob/main/kernel/cpu_local/lib.rs) | CPU topology/local storage/FPU ownership | Borrowed lifetime API and TLS migration evidence; 64 CPUs is a ceiling |
+| [tlb_ops](https://github.com/Zero-kernel/Nilix/blob/main/kernel/tlb_ops/lib.rs) | TLB/INVPCID primitives | Active MM/arch dependency; CPU-feature dependent |
+| [sync_safe](https://github.com/Zero-kernel/Nilix/blob/main/kernel/sync_safe/lib.rs) | IRQ-safe lock wrappers | Dormant since R192-8: not linked into the kernel, so its debug check never runs |
+| [drivers](https://github.com/Zero-kernel/Nilix/blob/main/kernel/drivers/lib.rs) | VGA/framebuffer, serial, keyboard | Basic console, not a desktop/device-driver ecosystem |
+| [virtio](https://github.com/Zero-kernel/Nilix/blob/main/kernel/virtio/src/lib.rs) | Shared PCI/MMIO transport/queues | Block/network integration; ACCESS_PLATFORM/device breadth pending |
+| [crypto](https://github.com/Zero-kernel/Nilix/blob/main/kernel/crypto/lib.rs) | Shared SHA-256 | Narrow primitive, not a general certified provider |
+| [klog](https://github.com/Zero-kernel/Nilix/blob/main/kernel/klog/lib.rs) | Profile-aware logging | Active lint/macros; full caller/redaction sweep tracked |
+| [mm](https://github.com/Zero-kernel/Nilix/blob/main/kernel/mm/lib.rs) | Buddy/heap/admission, paging/cache/DMA/OOM/TLB | Anonymous/COW paths; admission/shared/file-mapping gaps |
+| [coverage](https://github.com/Zero-kernel/Nilix/blob/main/kernel/coverage/lib.rs) | KCOV task bitmap/control | Host-root authority/manual instrumentation; not exhaustive coverage |
+| [cap](https://github.com/Zero-kernel/Nilix/blob/main/kernel/cap/lib.rs) | Rights, IDs, generations and tables | File/pipe lifecycle integration; native syscall family incomplete |
+| [audit](https://github.com/Zero-kernel/Nilix/blob/main/kernel/audit/lib.rs) | Hash/HMAC ring and export | Policy/hosted evidence; durable production backend missing |
+| [security](https://github.com/Zero-kernel/Nilix/blob/main/kernel/security/lib.rs) | W^X/NX, RNG/kptr/KASLR, CPU mitigations | Mechanism/status tests; full KPTI/retpoline unsupported |
+| [lsm](https://github.com/Zero-kernel/Nilix/blob/main/kernel/lsm/lib.rs) | Process/file/IPC/memory/network hooks | Active policies; future-operation hooks do not implement operations |
+| [seccomp](https://github.com/Zero-kernel/Nilix/blob/main/kernel/seccomp/lib.rs) | Strict/filter and pledge | Tested subset; TSYNC/Linux parity residuals |
+| [compliance](https://github.com/Zero-kernel/Nilix/blob/main/kernel/compliance/lib.rs) | Profiles, sticky FIPS state/KAT policy | No certification or complete Secure-platform guarantee |
+| [livepatch](https://github.com/Zero-kernel/Nilix/blob/main/kernel/livepatch/lib.rs) | Experimental signed patch/lifecycle machinery | Unsupported, ENOSYS; production enablement absent |
+| [block](https://github.com/Zero-kernel/Nilix/blob/main/kernel/block/src/lib.rs) | Owned BIO/completion/geometry/virtio-blk | Host/guest 512B/4096B evidence; physical matrix pending |
+| [net](https://github.com/Zero-kernel/Nilix/blob/main/kernel/net/src/lib.rs) | IPv4/TCP/UDP, sockets, conntrack/firewall, virtio-net | Container connectivity/IPv6/interoperability gaps |
+| [trace](https://github.com/Zero-kernel/Nilix/blob/main/kernel/trace/lib.rs) | Counters/tracepoints/watchdog/profiler/kdump | Diagnostics exist; external collection/performance pending |
+| [iommu](https://github.com/Zero-kernel/Nilix/blob/main/kernel/iommu/lib.rs) | DMAR/legacy VT-d/domains/remapping/quarantine | Q35/EDU scope tested; physical/topology gaps explicit |
+| [kernel_core](https://github.com/Zero-kernel/Nilix/blob/main/kernel/kernel_core/lib.rs) | Process/ABI/namespaces/cgroups/signals/RCU/ELF | Active hub; resource/ABI/teardown backlog remains |
+| [vfs](https://github.com/Zero-kernel/Nilix/blob/main/kernel/vfs/lib.rs) | Path/DAC/mounts, ramfs/ext2/JBD2/procfs/devfs/CPIO/cgroupfs | Tested publication/lifetime; durability/POSIX breadth missing |
+| [ipc](https://github.com/Zero-kernel/Nilix/blob/main/kernel/ipc/lib.rs) | Pipes/endpoints/messages/futex/sync | Pipes/robust cleanup exercised; native IPC/Linux futex parity pending |
+| [sched](https://github.com/Zero-kernel/Nilix/blob/main/kernel/sched/lib.rs) | Per-CPU MLFQ/preemption/stealing/affinity/cpuset | UP/four-CPU evidence; long/high-core/performance pending |
 
-The [kernel binary](../kernel/src/main.rs) wires services together; the
-[bootloader](../bootloader/src/main.rs) is separate. [userspace](../userspace/)
+The [kernel binary](https://github.com/Zero-kernel/Nilix/blob/main/kernel/src/main.rs) wires services together; the
+[bootloader](https://github.com/Zero-kernel/Nilix/blob/main/bootloader/src/main.rs) is separate. [userspace](https://github.com/Zero-kernel/Nilix/tree/main/userspace)
 contains libc helpers, shell, musl/stress probes and guest fuzz executors.
-[fuzz](../fuzz/) and [tools/fuzz_executor](../tools/fuzz_executor/) are host tooling.
+[fuzz](https://github.com/Zero-kernel/Nilix/tree/main/fuzz) and [tools/fuzz_executor](https://github.com/Zero-kernel/Nilix/tree/main/tools/fuzz_executor) are host tooling.
 
 ## 5. Capabilities and missing contracts
 
@@ -138,9 +138,9 @@ COW fork have real userspace paths. RF180-20 repaired shared supervisor
 page-table ownership across fork/exec/teardown; the complete four-worker
 mitigation workload exercises this repair.
 
-**Current state:** sys_mmap validates the complete flags word after the LSM hook, admits private/shared-anonymous forms and rejects unsupported forms before VMA mutation. Shared-anonymous regions use an admitted side-map and first-touch demand faults with `PAGE_REF_COUNT` ownership; report and CPU-worker transport uses pipes. `sys_mremap` no longer returns `ENOSYS`: private-anonymous and private-`PROT_NONE` VMAs can grow or shrink in place or relocate under `MREMAP_MAYMOVE`, using the same three-phase VMA/page-table transaction as mmap/munmap ([design](review/design/st-k2-mremap-anonymous-design.md)). Bounded slab, NUMA, swap and THP primitives are available with integration self-tests. **Remaining:** strict guest/musl qualification; MAP_FIXED and file mappings; shared-anonymous `mremap` (a shared region is snapshotted into every fork child, so resizing needs a per-VMA identity model) and qualified backend consumers/stress. The `mremap` page-table/refcount behavioral legs need a live user address space and remain independent-review/guest pending; the in-tree oracle covers the flags/placement/delta contract. SMP/combined stress still requires the full shared fault contract.
+**Current state:** sys_mmap validates the complete flags word after the LSM hook, admits private/shared-anonymous forms and rejects unsupported forms before VMA mutation. Shared-anonymous regions use an admitted side-map and first-touch demand faults with `PAGE_REF_COUNT` ownership; report and CPU-worker transport uses pipes. `sys_mremap` no longer returns `ENOSYS`: private-anonymous and private-`PROT_NONE` VMAs can grow or shrink in place or relocate under `MREMAP_MAYMOVE`, using the same three-phase VMA/page-table transaction as mmap/munmap ([design](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/design/st-k2-mremap-anonymous-design.md)). Bounded slab, NUMA, swap and THP primitives are available with integration self-tests. **Remaining:** strict guest/musl qualification; MAP_FIXED and file mappings; shared-anonymous `mremap` (a shared region is snapshotted into every fork child, so resizing needs a per-VMA identity model) and qualified backend consumers/stress. The `mremap` page-table/refcount behavioral legs need a live user address space and remain independent-review/guest pending; the in-tree oracle covers the flags/placement/delta contract. SMP/combined stress still requires the full shared fault contract.
 
-**R186-4 final remote verification is complete for the supported scope:** the fork snapshot reserves before allocation and the admitted-map constructor no longer shrinks infallibly. Local charge/cleanup oracles, two independent U23 safe-path reviews, and the exact final remote MM 26/26, kernel-core 68/68, hosted, build and lint gates pass on `40c-devbox-ts` in `/tmp/zero-os-codex-final-20260913`; runtime/boot/4-core SMP are zero-failure qualified. The bounded CorruptState policy, musl markers and strict guest/platform qualification remain. Owners: **ST-K2-P1/P2, U55-6**; [admission design](review/design/p0-a-r186-4-admission-closure-design.md).
+**R186-4 final remote verification is complete for the supported scope:** the fork snapshot reserves before allocation and the admitted-map constructor no longer shrinks infallibly. Local charge/cleanup oracles, two independent U23 safe-path reviews, and the exact final remote MM 26/26, kernel-core 68/68, hosted, build and lint gates pass on `40c-devbox-ts` in `/tmp/zero-os-codex-final-20260913`; runtime/boot/4-core SMP are zero-failure qualified. The bounded CorruptState policy, musl markers and strict guest/platform qualification remain. Owners: **ST-K2-P1/P2, U55-6**; [admission design](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/design/p0-a-r186-4-admission-closure-design.md).
 
 ### 5.2 Processes, threads, scheduling and teardown
 
@@ -153,7 +153,7 @@ shared signal table with a group pending set, fs context and fd table; group exi
 fatal signals and stop; tkill/tgkill; exactly-once reaping and group-wide children;
 exec from the leader or any thread; procfs `task/` lists. The Ring-3 oracle and musl
 `pthread_create`/`join`/signal legs exercise them on 1-16 CPUs
-([design](review/design/gap-5-slice4-thread-group-design.md)).
+([design](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/design/gap-5-slice4-thread-group-design.md)).
 
 **Missing:** a handler signal for a thread blocked in LOCK_PI waits until the call
 returns (no restart); no sigaltstack or rt_tgsigqueueinfo; sigframes only on the
@@ -376,7 +376,7 @@ are regression obligations, not still-open implementation tasks.
 
 **Next group:** reconcile R188 review lineage and complete strict guest qualification; continue ST-K2/ST-K4 and the six-profile acceptance sequence.
 
-[Current handoff notes](review/design/next-handoff-2026-09-12.md) retain prior
+[Current handoff notes](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/design/next-handoff-2026-09-12.md) retain prior
 design choices and identify changed-premise review requirements.
 
 **Then:** shared-anonymous memory, all six stress profiles, strict network/SMP/
@@ -404,7 +404,7 @@ rollover creates no new audit or independent-repair verdict.
 
 ## 12. Known debt and conservation
 
-The [active plan](review/nextplan/next-phase-plan-2026-09-12.md) restores the KSA
+The [active plan](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/nextplan/next-phase-plan-2026-09-12.md) restores the KSA
 queue plus P0-A/P1-A, ST-K1..K4/ST-5/ST-6, F2/F7/F4-F6/F10/F11/wait residuals,
 U37-1a/U37-1b/U55-6/U29-3, D3 network/TSYNC/ARC, R186 design rows, four open PO
 records, P3 tests and F-1b..F-10.
@@ -426,7 +426,7 @@ efficiency; QEMU IRTE reuse does not qualify general VM passthrough.
 | Hardware/performance | Named matrix/protocols and future oracles | Physical VT-d/performance/thermal evidence pending |
 
 Commands: [CI guide](ci-testing.md), [quality gates](quality-gates.md),
-[script map](../scripts/README.md). Boot/runtime/SMP and musl observation windows
+[script map](https://github.com/Zero-kernel/Nilix/blob/main/scripts/README.md). Boot/runtime/SMP and musl observation windows
 default to 900 seconds; mitigation, qemu-fuzz and stress retain their 900-second
 budgets. Job budgets include sequential windows/setup/build/artifacts. Short mock unit
 deadlines do not shorten real guest execution.
@@ -451,5 +451,5 @@ hardware does not block independent software tasks.
 | 5.4, September 10 | Intermediate KSA snapshot; later acceptance/older backlog not reconciled |
 | 6.0, September 12 | Restored component/phase/release detail, current gaps/evidence and conserved backlog |
 
-[README](../README.md) · [Docs](README.md) · [Architecture](architecture.md) ·
+[README](https://github.com/Zero-kernel/Nilix/blob/main/README.md) · [Docs](README.md) · [Architecture](architecture.md) ·
 [Nextplan](next-phase-plan.md) · [Security](security-audit-status.md) · [CI](ci-testing.md)

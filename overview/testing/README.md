@@ -154,7 +154,7 @@ See [test-coverage-expansion-plan.md](test-coverage-expansion-plan.md) for the r
 - Automated test runs
 - Coverage reporting
 
-See [.github/workflows/](../../../.github/workflows/) for CI configuration.
+See [.github/workflows/](https://github.com/Zero-kernel/Nilix/tree/main/.github/workflows) for CI configuration.
 
 ## Writing Tests
 
@@ -226,8 +226,8 @@ This prevents regressions and validates the fix.
 
 ## Related Documentation
 
-- **[../../review/audits/](../../review/audits/)** - Security audits that drive test requirements
-- **[../../review/fixes/](../../review/fixes/)** - Fixes that require regression tests
+- **[../../review/audits/](https://github.com/Zero-kernel/Nilix-docs-private/tree/main/audits)** - Security audits that drive test requirements
+- **[../../review/fixes/](https://github.com/Zero-kernel/Nilix-docs-private/tree/main/fixes)** - Fixes that require regression tests
 - **[../06-security/safety/](../06-security/safety/)** - IRQ safety testing requirements
 - **[../reports/](../reports/)** - Test implementation status reports
 

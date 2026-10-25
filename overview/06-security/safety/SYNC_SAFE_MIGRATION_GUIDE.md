@@ -550,8 +550,8 @@ If sync_safe::Mutex causes issues:
 
 - [kernel/sync_safe/lib.rs](../sync_safe/lib.rs) - Implementation
 - [kernel/sync_safe/README.md](../sync_safe/README.md) - Design rationale
-- [IRQ_SAFETY_AUDIT.md](./IRQ_SAFETY_AUDIT.md) - Audit findings
-- [IRQ_LOCK_SITE_INVENTORY.md](./IRQ_LOCK_SITE_INVENTORY.md) - Complete lock catalog
+- [IRQ_SAFETY_AUDIT.md](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/legacy-overview/06-security/safety/IRQ_SAFETY_AUDIT.md) - Audit findings
+- [IRQ_LOCK_SITE_INVENTORY.md](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/legacy-overview/06-security/safety/IRQ_LOCK_SITE_INVENTORY.md) - Complete lock catalog
 - R173 bug report - Historical context
 
 ---

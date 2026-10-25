@@ -10,4 +10,4 @@ authenticated patch/dependency/rollback tests, cross-core instruction synchroniz
 and tamper-evident audit validation. No production support feature is currently offered.
 
 This is the unsupported branch of P1-4/KSA-009 in the
-[current plan](review/nextplan/next-phase-plan-2026-09-06.md).
+[current plan](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/nextplan/next-phase-plan-2026-09-06.md).

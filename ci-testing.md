@@ -5,7 +5,7 @@ This is the contributor map for CI and its local equivalents. The September 12,
 `Extended tests`, and private campaigns in `Fuzzing`. Triage and stale-issue
 automation are repository maintenance, not test results.
 
-The script layout is documented in [`scripts/README.md`](../scripts/README.md);
+The script layout is documented in [`scripts/README.md`](https://github.com/Zero-kernel/Nilix/blob/main/scripts/README.md);
 all workflow jobs use the shared `scripts/ci/entrypoint.sh` dispatcher and the
 same grouped commands are available locally.
 
@@ -26,7 +26,7 @@ the required fuzz-tool regression suite.
 ### Change-based job selection
 
 The first `CI` job, `Changes / select jobs`, runs
-[`scripts/ci/select_jobs.py`](../scripts/ci/select_jobs.py) on the files a push or
+[`scripts/ci/select_jobs.py`](https://github.com/Zero-kernel/Nilix/blob/main/scripts/ci/select_jobs.py) on the files a push or
 pull request changes and starts only the jobs that can be affected. The first rule
 that matches a path decides its jobs:
 
@@ -150,7 +150,7 @@ and both proof runs are retained in that run's artifact (17/17 and 15/17). So th
 leg was chronically flaky rather than newly regressed, and it was removed from the
 `qemu` matrix pending the tick-rate repair. The entrypoint branch and
 `make test-security-mitigations` still run it locally. See
-[bsp-timer-tick-rate-2026-09-15.md](review/nextplan/bsp-timer-tick-rate-2026-09-15.md)
+[bsp-timer-tick-rate-2026-09-15.md](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/nextplan/bsp-timer-tick-rate-2026-09-15.md)
 for the evidence, the two candidate fixes and the re-enable condition.
 
 ## Reference designs

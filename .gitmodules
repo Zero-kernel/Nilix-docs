@@ -1,0 +1,4 @@
+[submodule "review"]
+	path = review
+	url = https://github.com/Zero-kernel/Nilix-docs-private.git
+	update = none

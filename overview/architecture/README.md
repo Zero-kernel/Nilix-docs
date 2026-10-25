@@ -8,7 +8,7 @@ This directory contains architectural documentation for the Zero-OS kernel.
 
 ## Related Documentation
 
-- **Design Findings**: See [../../review/remediation/](../../review/remediation/) for open design findings and remediation roadmap
+- **Design Findings**: See [../../review/remediation/](https://github.com/Zero-kernel/Nilix-docs-private/tree/main/remediation) for open design findings and remediation roadmap
 - **Implementation Status**: See [../reports/](../reports/) for implementation status and completion summaries
 - **Safety Analysis**: See [../06-security/safety/](../06-security/safety/) for IRQ safety audits and lock hierarchy documentation
 

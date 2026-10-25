@@ -2,7 +2,7 @@
 
 Nilix enforces correctness, style, and boot health automatically — the same gates run in
 CI, and contributors can run them locally (the maintainer's Windows mirror offloads to a
-Linux build host). This is the detail behind [README §Quality](../README.md); the
+Linux build host). This is the detail behind [README §Quality](https://github.com/Zero-kernel/Nilix/blob/main/README.md); the
 top-level README carries only a pointer. For the fuzzing deep docs see
 [`docs/fuzzing/`](fuzzing/) and [`docs/overview/05-fuzzing/`](overview/05-fuzzing/).
 
@@ -294,4 +294,4 @@ coverage feedback. See [`docs/FUZZING_SUMMARY.md`](FUZZING_SUMMARY.md).
   offload over SSH for a toolchain-less mirror (`git config zeroos.remote`/`zeroos.remoteDir`).
   Bypass a single push with `SKIP_PREPUSH=1 git push`. A pre-commit-framework equivalent
   (`.pre-commit-config.yaml`) is also provided — see
-  [CONTRIBUTING.md](../CONTRIBUTING.md).
+  [CONTRIBUTING.md](https://github.com/Zero-kernel/Nilix/blob/main/CONTRIBUTING.md).

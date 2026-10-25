@@ -4,10 +4,10 @@ This directory contains IRQ safety analysis, lock ordering documentation, and sy
 
 ## IRQ Safety
 
-- **[IRQ_SAFETY_AUDIT.md](IRQ_SAFETY_AUDIT.md)** - Comprehensive IRQ safety audit across all kernel subsystems
-- **[IRQ_SAFETY_PROPAGATION_PLAN.md](IRQ_SAFETY_PROPAGATION_PLAN.md)** - Plan for propagating IRQ-safe primitives throughout the codebase
-- **[IRQ_LOCK_SITE_INVENTORY.md](IRQ_LOCK_SITE_INVENTORY.md)** - Inventory of all lock sites requiring IRQ safety analysis
-- **[R173_IRQ_SAFETY_FIXES_SUMMARY.md](R173_IRQ_SAFETY_FIXES_SUMMARY.md)** - Summary of R173 IRQ safety fixes
+- **[IRQ_SAFETY_AUDIT.md](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/legacy-overview/06-security/safety/IRQ_SAFETY_AUDIT.md)** - Comprehensive IRQ safety audit across all kernel subsystems
+- **[IRQ_SAFETY_PROPAGATION_PLAN.md](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/legacy-overview/06-security/safety/IRQ_SAFETY_PROPAGATION_PLAN.md)** - Plan for propagating IRQ-safe primitives throughout the codebase
+- **[IRQ_LOCK_SITE_INVENTORY.md](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/legacy-overview/06-security/safety/IRQ_LOCK_SITE_INVENTORY.md)** - Inventory of all lock sites requiring IRQ safety analysis
+- **[R173_IRQ_SAFETY_FIXES_SUMMARY.md](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/legacy-overview/06-security/safety/R173_IRQ_SAFETY_FIXES_SUMMARY.md)** - Summary of R173 IRQ safety fixes
 
 ## Sync Primitive Migration
 
@@ -136,4 +136,4 @@ The R173 audit identified systematic IRQ safety violations across the codebase. 
 - **Process table locking**: Migrated to `IrqSafeLock`
 - **Lock site inventory**: Documented all 100+ lock sites
 
-See [R173_IRQ_SAFETY_FIXES_SUMMARY.md](R173_IRQ_SAFETY_FIXES_SUMMARY.md) for the complete fix summary.
+See [R173_IRQ_SAFETY_FIXES_SUMMARY.md](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/legacy-overview/06-security/safety/R173_IRQ_SAFETY_FIXES_SUMMARY.md) for the complete fix summary.

@@ -4,13 +4,13 @@ This directory contains final implementation status reports and comprehensive su
 
 ## Current Status
 
-- **[R186 audit and fix record](../../review/audits/qa-2026-07-28.md)** - Authoritative live security status
-- **[Authoritative RF186 review-fix report](../../review/reviewfix/reviewfix-2026-07-30.md)** - 16 fixes reviewed; 2 PASS / 12 PARTIAL / 2 FAIL; 24/24 defects repaired; final ladder green
-- **[Current next-phase plan](../../review/nextplan/next-phase-plan-2026-07-23-v2.md)** - Live release blockers and priorities
-- **[FINAL_IMPLEMENTATION_STATUS.md](FINAL_IMPLEMENTATION_STATUS.md)** - Final implementation status report for latest QA round
-- **[COMPLETE_QA_REMEDIATION_FINAL.md](COMPLETE_QA_REMEDIATION_FINAL.md)** - Complete QA remediation final summary
-- **[COMPREHENSIVE_RECONSTRUCTION_SUMMARY.md](COMPREHENSIVE_RECONSTRUCTION_SUMMARY.md)** - Comprehensive reconstruction summary
-- **[QA_FIXES_AND_TESTS_COMPLETE.md](QA_FIXES_AND_TESTS_COMPLETE.md)** - QA fixes and tests completion report
+- **[R186 audit and fix record](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/audits/qa-2026-07-28.md)** - Authoritative live security status
+- **[Authoritative RF186 review-fix report](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/reviewfix/reviewfix-2026-07-30.md)** - 16 fixes reviewed; 2 PASS / 12 PARTIAL / 2 FAIL; 24/24 defects repaired; final ladder green
+- **[Current next-phase plan](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/nextplan/next-phase-plan-2026-07-23-v2.md)** - Live release blockers and priorities
+- **[FINAL_IMPLEMENTATION_STATUS.md](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/legacy-overview/reports/FINAL_IMPLEMENTATION_STATUS.md)** - Final implementation status report for latest QA round
+- **[COMPLETE_QA_REMEDIATION_FINAL.md](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/legacy-overview/reports/COMPLETE_QA_REMEDIATION_FINAL.md)** - Complete QA remediation final summary
+- **[COMPREHENSIVE_RECONSTRUCTION_SUMMARY.md](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/legacy-overview/reports/COMPREHENSIVE_RECONSTRUCTION_SUMMARY.md)** - Comprehensive reconstruction summary
+- **[QA_FIXES_AND_TESTS_COMPLETE.md](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/legacy-overview/reports/QA_FIXES_AND_TESTS_COMPLETE.md)** - QA fixes and tests completion report
 
 The named `FINAL_*` reports are historical snapshots. As of 2026-07-30 the
 1.0-Preview gate is **BLOCKED** on one HIGH (`R186-4`) and its D1 design parent,
@@ -74,10 +74,10 @@ Latest comprehensive audit and remediation:
 - 18 filed findings: 17 actionable plus 1 INFO
 - 16 actionables fully fixed; `R186-4` open
 - Gate: BLOCKED (0 CRITICAL, 1 HIGH); zero-HIGH streak reset to 0/3
-- Full record: [qa-2026-07-28.md](../../review/audits/qa-2026-07-28.md)
+- Full record: [qa-2026-07-28.md](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/audits/qa-2026-07-28.md)
 - Authoritative fix review (RF186 final, July 30): 16 fixes reviewed,
   24/24 defects repaired, 0 escalated; final ladder green —
-  [reviewfix-2026-07-30.md](../../review/reviewfix/reviewfix-2026-07-30.md)
+  [reviewfix-2026-07-30.md](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/reviewfix/reviewfix-2026-07-30.md)
 
 ### R174 (July 2026)
 Historical comprehensive audit and remediation:
@@ -107,7 +107,7 @@ Quota and cgroup memory safety:
 - Memory pinning telescoping
 - Cgroup delete gates
 
-See [../../review/audits/](../../review/audits/) for detailed audit reports.
+See [../../review/audits/](https://github.com/Zero-kernel/Nilix-docs-private/tree/main/audits) for detailed audit reports.
 
 ## Quality Metrics
 
@@ -149,9 +149,9 @@ Every report must record each relevant gate honestly as PASS, FAIL, NOT-RUN, or 
 
 ## Related Documentation
 
-- **[../../review/audits/](../../review/audits/)** - Detailed QA audit reports through R186
-- **[../../review/fixes/](../../review/fixes/)** - Fix plans and implementation details
-- **[../../review/remediation/](../../review/remediation/)** - Remediation roadmaps and open findings
+- **[../../review/audits/](https://github.com/Zero-kernel/Nilix-docs-private/tree/main/audits)** - Detailed QA audit reports through R186
+- **[../../review/fixes/](https://github.com/Zero-kernel/Nilix-docs-private/tree/main/fixes)** - Fix plans and implementation details
+- **[../../review/remediation/](https://github.com/Zero-kernel/Nilix-docs-private/tree/main/remediation)** - Remediation roadmaps and open findings
 - **[../testing/](../testing/)** - Test coverage and implementation documentation
 - **[../06-security/safety/](../06-security/safety/)** - IRQ safety and lock ordering documentation
 - **[../architecture/](../architecture/)** - Subsystem architecture documentation

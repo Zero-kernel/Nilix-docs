@@ -2,7 +2,7 @@
 
 **状态（2026-09-20 更新）：** 已实现既有 3.1–3.3 子集与私有匿名 mremap 切片。共享映射生命周期修复经独立源码审查，Ring-3 内存门 13/13 通过，含跨页 usercopy 首触、父子共享、PT 最后叶子退账、真实 cgroup 迁移与 rmdir。完整并发/失败路径及 shared-mmap 专用 musl marker 仍是 verification pending；文件映射与共享 mremap 保持 fail-closed。
 **范围：** README 的 “What works, and what is missing” 表格中列出的全部缺口。
-**依据：** [README](../../README.md)、[roadmap](../roadmap.md)、[当前 next-phase plan](../review/nextplan/next-phase-plan-2026-09-13.md)、当前工作树源码。
+**依据：** [README](https://github.com/Zero-kernel/Nilix/blob/main/README.md)、[roadmap](../roadmap.md)、[当前 next-phase plan](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/nextplan/next-phase-plan-2026-09-13.md)、当前工作树源码。
 **源码身份：** `git rev-parse HEAD = 8660ba62ed0226f25154456d1908dec048e07c85`；工作树有用户已有修改，本文没有改动任何内核代码。
 **设计原则：** Safety > Correctness > Efficiency > Performance。本文是交接设计，不授予实现、提交或发布权限。
 
@@ -38,9 +38,9 @@ P0-A/R186-4 准入闭环
 
 已有的三份深度设计继续作为对应工作包的主体：
 
-* [P0-A/R186-4 准入闭环](../review/design/p0-a-r186-4-admission-closure-design.md)；
-* [ST-K2 mmap/shared](../review/design/st-k2-map-shared-design.md)；
-* [ST-K4 durability/writeback](../review/design/st-k4-fsync-writeback-design.md)。
+* [P0-A/R186-4 准入闭环](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/design/p0-a-r186-4-admission-closure-design.md)；
+* [ST-K2 mmap/shared](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/design/st-k2-map-shared-design.md)；
+* [ST-K4 durability/writeback](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/design/st-k4-fsync-writeback-design.md)。
 
 下面的章节给出每个 README 组件的当前证据、实现步骤和验收 oracle。实现代理应先阅读本章对应小节，再阅读链接的深度设计，最后重新核对当前源码行号。
 
@@ -92,7 +92,7 @@ P0-A/R186-4 准入闭环
 
 共享匿名映射使用 admitted 的 `SharedAnonRegion` side map（`kernel/kernel_core/fork.rs:1909`）：槽位 backing 与 `HeapCharge` 在 `try_new`（`:1918`）中于任何分配之前全量预留，charge 保留到 region Arc 最终销毁（`Drop` 在 `:1974`）。`sys_mmap` 只发布元数据、不分配数据页（`syscall.rs:14033-14043`）；首次用户态或 usercopy fault 由 `handle_shared_page_fault`（`fork.rs:1704`）处理：全程只用 try-lock，在 `PT_LOCK` 之前预留有界的 DATA+PT 额度（`:1747-1775`），零化并映射一页，在 region 槽位记录 owner 与 cgroup 归属；`map_page` 失败只拆除已证明为空的中间页表，并把可达 PT 帧计入保留账（`:1825-1850`）。fork 复制 side-map Arc 与共享叶子并保留可写权限，同时只增加一个 mapping 引用（`:805-839`）；父进程 PTE 不变。shared `mprotect` 在任何边界拆分之前返回 `EOPNOTSUPP`（`syscall.rs:15036-15045`）。
 
-2026-09-20 跟进：fault 检查 VMA transient/fork 状态，在 charge 前识别已被其他 CPU 解决的缺页；munmap 按实际拆除叶子执行跨 CPU TLB 刷新。新增预留容量的 per-AS shared-fault PT 物理帧账，PT 随地址空间存活和迁移，DATA 保持首触者归属，不能把 PT 费用绑在 region Drop 上。详见[生命周期设计及验证](../review/design/st-k2-shared-fault-lifecycle-design.md)。待验收项是完整 SMP fault/unmap/exec/exit 竞争、精确物理帧最后引用释放、PTE-only syscall preflight、通用 private rollback 的账目回收，以及 shared-mmap 专用 musl marker。
+2026-09-20 跟进：fault 检查 VMA transient/fork 状态，在 charge 前识别已被其他 CPU 解决的缺页；munmap 按实际拆除叶子执行跨 CPU TLB 刷新。新增预留容量的 per-AS shared-fault PT 物理帧账，PT 随地址空间存活和迁移，DATA 保持首触者归属，不能把 PT 费用绑在 region Drop 上。详见[生命周期设计及验证](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/design/st-k2-shared-fault-lifecycle-design.md)。待验收项是完整 SMP fault/unmap/exec/exit 竞争、精确物理帧最后引用释放、PTE-only syscall preflight、通用 private rollback 的账目回收，以及 shared-mmap 专用 musl marker。
 
 1. `PAGE_REF_COUNT` 已是物理帧的唯一 owner；VMA 与 side-map 只保存共享对象和页槽，不在每个进程重复释放帧。
 2. 首次 fault 的 charge 与提交顺序已按上述实现；charge 失败保持未映射，不出现“有页无 charge”。
@@ -238,7 +238,7 @@ epoll/eventfd/timerfd 只有在 pipe/futex wait ownership 稳定后实现，全�
 
 ## 10. 存储、持久化和缓存（P1，ST-K4）
 
-完整设备 flush、四个 syscall 和 guest block/recovery workload 按 [ST-K4 设计](../review/design/st-k4-fsync-writeback-design.md) 执行；其当前 source bridge 已指出 numeric fd、current namespace lookup、BIO ownership 和 virtio 无 FLUSH 时“静默成功”都是不能沿用的旧前提。
+完整设备 flush、四个 syscall 和 guest block/recovery workload 按 [ST-K4 设计](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/design/st-k4-fsync-writeback-design.md) 执行；其当前 source bridge 已指出 numeric fd、current namespace lookup、BIO ownership 和 virtio 无 FLUSH 时“静默成功”都是不能沿用的旧前提。
 
 实现要点：
 
@@ -418,14 +418,14 @@ ST-K3-WAITID 的判定用例是 `kernel/kernel_core/syscall.rs` 中的 `st_k3_wa
 
 ## 22. 参考
 
-* [README capability table](../../README.md#what-works-and-what-is-missing)
+* [README capability table](https://github.com/Zero-kernel/Nilix/blob/main/README.md#what-works-and-what-is-missing)
 * [Roadmap component gaps](../roadmap.md#5-capabilities-and-missing-contracts)
-* [Current next-phase plan](../review/nextplan/next-phase-plan-2026-09-13.md)
-* [R188 review-fix](../review/reviewfix/reviewfix-2026-09-13.md)
-* [P0-A design](../review/design/p0-a-r186-4-admission-closure-design.md)
-* [ST-K2 design](../review/design/st-k2-map-shared-design.md)
-* [ST-K4 design](../review/design/st-k4-fsync-writeback-design.md)
-* [ST-K3 进程生命周期记录](../review/design/st-k3-process-lifecycle-design.md)——§4 的 waitid、ROOT-INIT、F2 与 Ring-3 生命周期判定
+* [Current next-phase plan](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/nextplan/next-phase-plan-2026-09-13.md)
+* [R188 review-fix](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/reviewfix/reviewfix-2026-09-13.md)
+* [P0-A design](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/design/p0-a-r186-4-admission-closure-design.md)
+* [ST-K2 design](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/design/st-k2-map-shared-design.md)
+* [ST-K4 design](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/design/st-k4-fsync-writeback-design.md)
+* [ST-K3 进程生命周期记录](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/design/st-k3-process-lifecycle-design.md)——§4 的 waitid、ROOT-INIT、F2 与 Ring-3 生命周期判定
 * [VT-d support matrix](../vtd-support-matrix.md)
 * [Livepatch support boundary](../livepatch-support.md)
 

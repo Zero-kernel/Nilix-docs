@@ -11,7 +11,7 @@ implementations; a historical COMPLETE heading is not a current product claim.
 | What the kernel can do and what is missing | [Roadmap](roadmap.md) — all 25 kernel libraries, component capabilities, Linux gaps, trust boundaries and release conditions |
 | Priorities, dependencies and implementation handoff | [Current nextplan](next-phase-plan.md) — full September 12 rollover; both KSA and older open queues |
 | Execution paths and crate graph | [Architecture](architecture.md); capability availability is governed by the roadmap |
-| Run tests and read reports | [CI/testing guide](ci-testing.md), [quality gates](quality-gates.md), [scripts](../scripts/README.md) |
+| Run tests and read reports | [CI/testing guide](ci-testing.md), [quality gates](quality-gates.md), [scripts](https://github.com/Zero-kernel/Nilix/blob/main/scripts/README.md) |
 | Audit acceptance vs release readiness | [Security status](security-audit-status.md) |
 | Supported VT-d/platform modes | [VT-d matrix](vtd-support-matrix.md) |
 | Experimental livepatch limits | [Livepatch support](livepatch-support.md) |
@@ -34,30 +34,49 @@ counts and evidence limits together.
 
 - [Readable architecture](architecture.md): composition, layering, boot, syscall
   and component paths.
-- [Current design records](review/design/README.md): item-specific invariants,
+- [Current design records](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/design/README.md): item-specific invariants,
   decisions, current-source amendments and acceptance oracles.
-- Local historical references: `docs/overview/architecture/ARCHITECTURE.md`,
-  `docs/overview/02-architecture/subsystems/` and `docs/design/`. These are
-  maintainer archives, outside the files distributed by a normal clone.
+- Historical references: [overview/architecture/ARCHITECTURE.md](overview/architecture/ARCHITECTURE.md),
+  [overview/02-architecture/subsystems/](overview/02-architecture/subsystems/)
+  and [design/](design/). These are dated maintainer archives.
 
 ## Audit, repair and plan history
 
 | Collection | Purpose |
 | --- | --- |
-| [Audits](review/audits/) | Dated original findings, including KSA-2026-09-06 |
-| [Fixes](review/fixes/) | Repair ledgers, source/evidence handoffs and scoped reviews |
-| [Review-fix](review/reviewfix/) | Independent verdicts and repair acceptance |
-| [Nextplan archive](review/nextplan/) | Full rollovers and historical status addenda |
+| [Audits](https://github.com/Zero-kernel/Nilix-docs-private/tree/main/audits) | Dated original findings, including KSA-2026-09-06 |
+| [Fixes](https://github.com/Zero-kernel/Nilix-docs-private/tree/main/fixes) | Repair ledgers, source/evidence handoffs and scoped reviews |
+| [Review-fix](https://github.com/Zero-kernel/Nilix-docs-private/tree/main/reviewfix) | Independent verdicts and repair acceptance |
+| [Nextplan archive](https://github.com/Zero-kernel/Nilix-docs-private/tree/main/nextplan) | Full rollovers and historical status addenda |
 | [Standalone security records](security/) | R188 and other standalone investigations |
-| [Remediation archive](review/remediation/) | Historical debt inventories |
-| Local `docs/overview/testing/` archive | Older test expansion/coverage design |
-| Local `docs/overview/06-security/safety/` archive | IRQ/locking and primitive migration references |
+| [Remediation archive](https://github.com/Zero-kernel/Nilix-docs-private/tree/main/remediation) | Historical debt inventories |
+| [Testing archive](overview/testing/) | Older test expansion/coverage design |
+| [IRQ-safety archive](overview/06-security/safety/) | IRQ/locking and primitive migration references |
 | [Fuzz investigations](fuzz/) | Historical crash triage and filesystem evidence |
 
 The [security status and source ledger](security-audit-status.md#record-provenance)
 summarize the September 11 software acceptance and September 12 QEMU device
 evidence, retaining the original record identities. Archive indexes can be
-public even when their underlying local audit artifacts are not distributed.
+public even when their underlying audit artifacts are not.
+
+## Repository layout
+
+This tree is [Nilix-docs](https://github.com/Zero-kernel/Nilix-docs), checked
+out at `docs/` in [Nilix](https://github.com/Zero-kernel/Nilix). Audits,
+repairs, review-fix verdicts, plans and design records live in the private
+[Nilix-docs-private](https://github.com/Zero-kernel/Nilix-docs-private)
+repository at `review/`, with older overview audit/report material under
+`review/legacy-overview/` and the draft PO-RES proofs under
+`review/legacy-design/`. A recursive clone skips `review/`; maintainers with
+access enable it once per clone:
+
+```sh
+git -C docs config submodule.review.update checkout
+git -C docs submodule update --init review
+```
+
+A change to `review/` is committed there first, then its pointer in this
+repository, then the `docs` pointer in Nilix.
 
 ## Maintaining these documents
 
@@ -74,5 +93,5 @@ Commit/push follows user authorization.
 
 ## Contributor entrypoints
 
-[CONTRIBUTING](../CONTRIBUTING.md) · [GOVERNANCE](../GOVERNANCE.md) ·
-[SUPPORT](../SUPPORT.md) · [SECURITY](../SECURITY.md) · [README](../README.md)
+[CONTRIBUTING](https://github.com/Zero-kernel/Nilix/blob/main/CONTRIBUTING.md) · [GOVERNANCE](https://github.com/Zero-kernel/Nilix/blob/main/GOVERNANCE.md) ·
+[SUPPORT](https://github.com/Zero-kernel/Nilix/blob/main/SUPPORT.md) · [SECURITY](https://github.com/Zero-kernel/Nilix/blob/main/SECURITY.md) · [README](https://github.com/Zero-kernel/Nilix/blob/main/README.md)

@@ -543,7 +543,7 @@ authoritative per-round status remains in `docs/review/audits/`; the live plan i
 
 ## 15. R188 review-fix reconciliation (2026-09-13)
 
-The dated review-fix report [`reviewfix-2026-09-13`](../review/reviewfix/reviewfix-2026-09-13.md)
+The dated review-fix report [`reviewfix-2026-09-13`](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/reviewfix/reviewfix-2026-09-13.md)
 reconciles all 131 original findings against current source and independent
 review. It records 123 PASS, 3 PARTIAL, no FAIL, and 5 verification-pending
 rows. Four targeted RF188 repairs cover virtio queue and RX recovery paths;

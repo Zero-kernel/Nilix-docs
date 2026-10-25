@@ -6,7 +6,7 @@ missing features: full KPTI isolation and compiler retpoline are unsupported,
 livepatch is disabled, and physical VT-d remains verification pending.
 
 This is the readable architecture reference behind the top-level
-[README](../README.md). It covers the workspace layout, the verified crate layering and
+[README](https://github.com/Zero-kernel/Nilix/blob/main/README.md). It covers the workspace layout, the verified crate layering and
 dependency DAG, the boot flow, the syscall path, and the core subsystems. For the deep
 reference — lock ordering, critical code paths, and the historical audit-finding record —
 the maintainer's local archive retains `docs/overview/architecture/ARCHITECTURE.md`
@@ -436,4 +436,4 @@ end-to-end** — crt startup consuming the auxv, musl stdio `printf`→`writev`,
   per-subsystem deep dives (bootloader, arch, memory, scheduler, IPC, kernel-core, VFS,
   networking, security, drivers, LSM/capabilities, observability, cpu-local, userspace,
   kernel-entry).
-- **[`docs/review/nextplan/`](review/nextplan/)** — the current prioritized development plan.
+- **[`docs/review/nextplan/`](https://github.com/Zero-kernel/Nilix-docs-private/tree/main/nextplan)** — the current prioritized development plan.

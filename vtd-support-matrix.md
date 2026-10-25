@@ -1,6 +1,6 @@
 # VT-d support and validation matrix
 
-**Active continuation, 2026-09-12:** QEMU EDU endpoint DMA/MSI, queued invalidation, fault containment and initialization failure profiles pass on the exact-final v3 manifest. The QEMU endpoint slice is accepted; physical rows remain pending. See the [device-probe design](review/design/p3-2-qemu-device-probe-design.md) and [P3-2 evidence](review/fixes/p3-2-qemu-device-evidence-2026-09-12.md).
+**Active continuation, 2026-09-12:** QEMU EDU endpoint DMA/MSI, queued invalidation, fault containment and initialization failure profiles pass on the exact-final v3 manifest. The QEMU endpoint slice is accepted; physical rows remain pending. See the [device-probe design](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/design/p3-2-qemu-device-probe-design.md) and [P3-2 evidence](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/fixes/p3-2-qemu-device-evidence-2026-09-12.md).
 The earlier claim that only physical verification remained is superseded.
 
 **Current disposition, 2026-09-11:** The matrix and artifact-backed Q35/failure/
@@ -29,7 +29,7 @@ Q35 initialization/failure-retention evidence. General physical-device isolation
 | VT-d scalable mode, ATS/PASID, 57-bit domains | Unsupported | Register gate accepts legacy major 1; Domain implements 39/48-bit page-table widths |
 | Unrestricted identity pass-through | Debug-only, unsupported for release | `unsafe_identity_passthrough` is rejected in release builds |
 
-The earlier [KSA-001 design](review/design/ksa-001-vtd-mmio-design.md) records comparison
+The earlier [KSA-001 design](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/design/ksa-001-vtd-mmio-design.md) records comparison
 against QEMU `v10.0.0` `hw/i386/intel_iommu_internal.h`, SHA-256
 `a884db5e7859bb34abcae2bd09fc9ac2d06d261a51ba37e684eb408d8682bd7e`.
 That is an encoding reference for the emulator. It is not proof that every historical
@@ -37,9 +37,9 @@ guest used that binary version, nor a substitute for an Intel hardware specifica
 Actual gate command/tool/image records determine the tested emulator instance.
 
 The current scope and completed KSA-001 evidence are in the
-[audit](review/audits/qa-2026-09-06.md),
-[repair ledger](review/fixes/ksa-2026-09-06-progress.md) and
-[independent review](review/fixes/ksa-2026-09-06-independent-review.md).
+[audit](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/audits/qa-2026-09-06.md),
+[repair ledger](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/fixes/ksa-2026-09-06-progress.md) and
+[independent review](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/fixes/ksa-2026-09-06-independent-review.md).
 Some older design status paragraphs predate accepted repair probes; the current ledger
 and per-finding audit disposition take precedence over those historical paragraphs.
 
@@ -51,7 +51,7 @@ device DMA, checked invalidation, raw faults and quiescence before ownership rel
 Missing evidence stays pending; injected errors are labeled as injected errors.
 
 Implementation details and exact oracles are in the
-[P3-2 design](review/design/p3-2-vtd-evidence-design.md). This matrix was a draft
+[P3-2 design](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/design/p3-2-vtd-evidence-design.md). This matrix was a draft
 support record awaiting independent review at the earlier snapshot; the current
 scoped implementation/review status is recorded above and creates no new physical-
 hardware pass.
