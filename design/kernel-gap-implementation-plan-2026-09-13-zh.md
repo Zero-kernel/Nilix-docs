@@ -85,7 +85,7 @@ P0-A/R186-4 准入闭环
 **Phase 1（先做，参见 ST-K2 设计）：**
 
 1. **Phase 1 已实现：** 在 LSM hook 之后、地址空间修改之前解析完整 `flags`。接受 `MAP_PRIVATE|MAP_ANONYMOUS` 和 shared-anonymous 形态；未知位、缺少 `MAP_ANONYMOUS` 的 `MAP_SHARED`、`MAP_SHARED_VALIDATE`、`MAP_FIXED` 返回 `EOPNOTSUPP`，不能悄悄按 private 映射成功。`run_mmap_flags_self_test()` 已接入 integration memory-mapping gate。
-2. `addr != 0` 仍按页对齐、用户上限、stack window、brk reservation、现有 VMA 和 map-count 检查；只有未来专门的 MAP_FIXED 工作包才能允许覆盖，且必须先拆除旧 VMA 并准备完整回滚。
+2. `addr != 0` 是提示（2026-10-25，R192-RES-3）：按页向下取整后的范围通过用户上限、对齐、`MMAP_MIN_ADDR`、stack window、brk reservation、现有 VMA 和未登记映射检查时使用，否则退回自动放置。`MAP_FIXED_NOREPLACE` 精确映射或失败（被占用 `EEXIST`、低于 `MMAP_MIN_ADDR` `EPERM`、超过上限 `ENOMEM`、未对齐 `EINVAL`），从不覆盖；`MAP_FIXED` 仍返回 `EOPNOTSUPP`。只有未来专门的 MAP_FIXED 工作包才能允许覆盖，且必须先拆除旧 VMA 并准备完整回滚。
 3. `stress_runner.c` 的 report page 和 CPU worker 结果已改为有界 pipe 记录；父子端关闭未使用 fd，处理短读/短写、EINTR、EOF、child failure 和超长记录，缺失记录不能被解释成 0 次工作。CPU profile 为每个 worker 使用独立 pipe；SMP 和 combined 仍有意使用 shared counters，继续属于 Phase 2 边界。
 
 **Phase 2（共享匿名，已实现到按需首触）：**
