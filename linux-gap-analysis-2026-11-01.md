@@ -345,7 +345,7 @@ Hosted test pins now total 616 (`scripts/tools/hosted_subcrate_tests.sh`).
 | Strict guest qualification | Open; 39 runtime deferrals, plus ST-K2-P2 races |
 | Stress profiles | See below |
 | Extended CI | Last three runs not green: failure on 2026-10-18 (twice), cancelled on 2026-10-25 after about 3 hours |
-| Main CI | The `78dd11a` run had not finished when this was last updated; the previous merge passed |
+| Main CI | `78dd11a` passed |
 
 Stress state, recorded 2026-10-27 and not rerun on this tree:
 
@@ -479,7 +479,7 @@ Non-x86 architectures, loadable modules, eBPF, `io_uring`, KVM host, swap, NUMA 
 
 ### 8.7 Immediate next steps
 
-DOC-SYNC and the §8.2 amendments are applied. ST-K4 is next: refresh its design on current `origin/main`, then implement it. The `78dd11a` CI result still needs confirming.
+DOC-SYNC and the §8.2 amendments are applied, and `78dd11a` passed CI. ST-K4 is implemented on branch `feat/st-k4-durability` and awaits review and its 900-second run. This document stays a 2026-11-01 snapshot: its tables still show the pre-ST-K4 state.
 
 ## 9. References
 

@@ -39,7 +39,7 @@ guest execution measure different things.
 | Composition | 25 kernel library crates plus the entry binary; separate UEFI bootloader, userspace and host tools. Most services execute in Ring 0. |
 | Userspace proof | Static ELF and real musl tests run in Ring 3; fork/exec/wait, descriptors, cwd/jails and several failure paths have guest evidence. |
 | September KSA | KSA-001..020 accepted within recorded rubrics; 17/18 associated plan items complete. P3-2 physical VT-d remains pending. |
-| Hosted gate | 616 counted unit-test executions per debug/release profile (pins in `scripts/tools/hosted_subcrate_tests.sh`), CpuLocal doctests and three test-code compile checks; explicit host-safe allowlist. |
+| Hosted gate | 632 counted unit-test executions per debug/release profile (pins in `scripts/tools/hosted_subcrate_tests.sh`), CpuLocal doctests and three test-code compile checks; explicit host-safe allowlist. |
 | Runtime inventory | 74 source-discovered RuntimeTest implementations; actual pass/deferred/warning/skipped/failed counts depend on image/platform. This is not 100% kernel code coverage. |
 | Recent CI | `CI` passed on the PR #49 merge (`0c7246b`). `Extended tests` has not completed successfully: its last three runs failed or were cancelled at the 3-hour mark. |
 | Release gate | BLOCKED: R186-4 strict qualification, historical review lineage, strict profile qualification, all seven stress profiles and the recorded 0/3 clean-audit streak. |
@@ -230,8 +230,9 @@ evidence. 512B/4096B logical blocks have dedicated checks.
 **Missing:** full ext4/POSIX support. chown/fchown/lchown, statx, hard links and
 general dirfd-relative combinations remain incomplete/stubbed. Symlink/readlink
 already exist: do not re-plan them as entirely absent. fsync/fdatasync/sync/
-sync_file_range are not wired into dispatch. Write-through/JBD2 is not an
-application durability syscall contract. Cache error/dirty/reclaim, unmount
+sync_file_range are dispatched since ST-K4 (verification pending): fsync returns 0 only
+after a device barrier the device can stand behind, and refuses otherwise. Ext2 has no
+truncate, unlink, mkdir, symlink or indirect allocation (EXT2-MUT). Cache error/dirty/reclaim, unmount
 sync/invalidation and power-loss recovery need separate proof. Owners:
 **ST-K4, F-3, CACHE-DEBT, STORAGE-TESTS**.
 
@@ -419,7 +420,7 @@ efficiency; QEMU IRTE reuse does not qualify general VM passthrough.
 | Layer | Evidence | Limit |
 | --- | --- | --- |
 | Source/build | fmt/Clippy/lints/ABI C oracle/build/linked usercopy | Not runtime completeness |
-| Hosted | 616 counted executions/profile, CpuLocal doctests, three compile checks | Host-safe allowlist; privileged paths guest-only |
+| Hosted | 632 counted executions/profile, CpuLocal doctests, three compile checks | Host-safe allowlist; privileged paths guest-only |
 | Harness | Python JUnit/coverage, shell syntax, outcome/parser regressions | Host coverage, not kernel instruction coverage |
 | Required QEMU | Boot/runtime/SMP, UP/four-CPU musl, IOMMU/mitigation/KCOV/two-seed smoke | Qualified outcomes/emulator scope retained |
 | Extended | Ubuntu 22.04/24.04, 8/16 CPU, Ext3/JBD2, seven stress profiles | Scheduled/manual; stress acceptance incomplete |
