@@ -1,9 +1,9 @@
 # Nilix (Zero-OS) — Development and Capability Roadmap
 
-**Revision:** 6.1 — **Updated:** 2026-09-14
-**Source baseline:** local 3.1–3.3 implementation working tree; exact final remote verification copy `/tmp/zero-os-codex-final-20260913` on `40c-devbox-ts`.
+**Revision:** 6.2 — **Updated:** 2026-11-01
+**Source baseline:** `78dd11a` for the corrections in revision 6.2; other sections keep the evidence dates they state. The 2026-09-13 remote verification copy remains the historical baseline of the 3.1–3.3 records.
 
-**Active plan:** [next-phase-plan-2026-09-13.md](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/nextplan/next-phase-plan-2026-09-13.md) (v16.4).
+**Active plan:** [next-phase-plan-2026-09-13.md](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/nextplan/next-phase-plan-2026-09-13.md) (v16.14). **Linux comparison:** [gap analysis](linux-gap-analysis-2026-11-01.md).
 
 Nilix is an experimental x86_64 OS kernel with UEFI boot, Ring-3 programs, a
 tested static-musl ABI subset, SMP scheduling, filesystems, IPv4 networking and
@@ -39,10 +39,10 @@ guest execution measure different things.
 | Composition | 25 kernel library crates plus the entry binary; separate UEFI bootloader, userspace and host tools. Most services execute in Ring 0. |
 | Userspace proof | Static ELF and real musl tests run in Ring 3; fork/exec/wait, descriptors, cwd/jails and several failure paths have guest evidence. |
 | September KSA | KSA-001..020 accepted within recorded rubrics; 17/18 associated plan items complete. P3-2 physical VT-d remains pending. |
-| Hosted gate | 438 counted unit-test executions per debug/release profile, CpuLocal doctests and three test-code compile checks; explicit host-safe allowlist. |
+| Hosted gate | 616 counted unit-test executions per debug/release profile (pins in `scripts/tools/hosted_subcrate_tests.sh`), CpuLocal doctests and three test-code compile checks; explicit host-safe allowlist. |
 | Runtime inventory | 74 source-discovered RuntimeTest implementations; actual pass/deferred/warning/skipped/failed counts depend on image/platform. This is not 100% kernel code coverage. |
-| Recent CI | [Run 34701321475](https://github.com/Zero-kernel/Nilix/actions/runs/34701321475), e127c34: hosted suites exposed a stale vfs oracle (actual 63 passed, expected 62); the count fix is in this tree. Runtime QEMU jobs are separately pending/completing. |
-| Release gate | BLOCKED: R186-4 admission closure, historical review lineage, strict profile qualification, all six stress profiles and the recorded 0/3 clean-audit streak. |
+| Recent CI | `CI` passed on the PR #49 merge (`0c7246b`). `Extended tests` has not completed successfully: its last three runs failed or were cancelled at the 3-hour mark. |
+| Release gate | BLOCKED: R186-4 strict qualification, historical review lineage, strict profile qualification, all seven stress profiles and the recorded 0/3 clean-audit streak. |
 
 Acceptance sources: the [historical record ledger](security-audit-status.md#record-provenance)
 identifies the KSA audit, final review-fix and P3-2 QEMU evidence; the public
@@ -184,11 +184,11 @@ IRQ-return delivery, basic poll/select and startup/time calls. Musl exercises
 blocked signals, robust usercopy and zero-length socket behavior.
 
 **Missing:** endpoint/message types are not complete native synchronous IPC and
-shared memory. FUTEX_WAKE_OP, the requeue-PI ops and partial bitsets are refused,
-so futex is not full Linux opcode/flag parity.
-SA_RESTART is accepted but interrupted calls can return EINTR; siginfo is
-minimal, sigaltstack absent, queued real-time signals incomplete. No completed
-epoll/eventfd/timerfd surface is claimed. Owners: **F-1c, F-2, F-4, F-10**.
+shared memory, and they have no syscall. Every futex key is private to one address
+space, so cross-process shared futexes are absent, and PI ABBA `EDEADLK` detection is
+missing. SA_RESTART is accepted but interrupted calls can return EINTR; siginfo is
+minimal, sigaltstack absent, queued real-time signals incomplete. epoll, eventfd,
+timerfd and signalfd have no code at all. Owners: **F-1c, F-2, F-4, F-10**.
 
 ### 5.4 Security framework and operational policy
 
@@ -311,11 +311,13 @@ source-discovered tests are not all-instruction/ABI coverage. Owners:
 
 ## 6. Gap analysis versus Linux
 
+This is a summary. The [gap analysis](linux-gap-analysis-2026-11-01.md) has the syscall census, capacity limits, per-subsystem tables and later milestones.
+
 | Domain | Nilix today | Next boundary |
 | --- | --- | --- |
-| Memory | Buddy/heap/charged maps/anonymous/COW | Admission, honest flags, shared/file mapping; later slab/NUMA/swap |
-| Processes | Static programs/fork/exec/wait/restricted clone | Thread/signal/wait fidelity before pthread claims |
-| Storage | ramfs/ext2/JBD2/namespace VFS | Durability/recovery, dirfd/metadata and filesystem breadth |
+| Memory | Buddy/heap/charged maps/anonymous/COW | Capacity limits (2 MiB heap, 1 MiB page cache, under 1 GiB RAM), lazy private memory, file mapping |
+| Processes | Static programs/fork/exec/wait/thread groups with musl pthreads | Identity changes, job control, signal restart and sigaltstack |
+| Storage | ramfs/ext2/JBD2/namespace VFS | Durability/recovery, Ext2 truncate/unlink/mkdir/indirect allocation, dirfd/metadata and filesystem breadth |
 | Network | IPv4/TCP/UDP/policy/virtio | Wire tests, namespace links/routes/admin, IPv6/drivers |
 | Containers | Five namespaces/selected controllers | Delegation/shared memory/FS sharing/OCI |
 | Security | Capabilities/LSM/seccomp/mitigation machinery | Isolation profiles/hardware/TSYNC/keys/backends |
@@ -351,7 +353,7 @@ creates a new full clean audit round.
 | R186-4 / P0-A / D1-RES-HEAP-ADMISSION-REOPENED | Implemented and final remote verification complete for supported scope; strict guest/platform qualification remains pending |
 | R188 original review lineage | Full original-rubric map absent from newer scoped KSA records; reconcile/review uncovered originals, reuse proven overlap |
 | No unresolved Critical/High in claimed scope; three clean rounds | Not established; streak unchanged |
-| All six stress-v2 profiles | Required by recorded 2026-09-01 user decision; memory/cpu/smp/process/block/combined acceptance pending |
+| All seven stress-v2 profiles | Required by recorded 2026-09-01 user decision, now including `thread`. On the 2026-10-27 run memory, cpu, smp and process are QUALIFIED; thread, block and combined fail |
 | Strict security/platform policy | Outcome truth implemented; deferred prerequisites still block qualification |
 | ABI/device/mitigation matrix | Preserve supported/rejected/advisory and physical/full-isolation limits |
 | CI result/retained evidence | Exact final remote source passes hosted/build/lint and zero-failure qualified QEMU runtime/boot/4-core SMP gates; musl markers remain incomplete; historical e127c34 count/parser notes are retained as provenance |
@@ -374,17 +376,16 @@ are regression obligations, not still-open implementation tasks.
 
 ## 10. Forward roadmap
 
-**Next group:** reconcile R188 review lineage and complete strict guest qualification; continue ST-K2/ST-K4 and the six-profile acceptance sequence.
+**Next group:** ST-K4, EXT2-MUT, ST-K2-P2 race probes, THREAD-HB, then Extended CI and all seven stress profiles, as ordered in plan v16.14 and the [gap analysis](linux-gap-analysis-2026-11-01.md).
 
 [Current handoff notes](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/design/next-handoff-2026-09-12.md) retain prior
 design choices and identify changed-premise review requirements.
 
-**Then:** shared-anonymous memory, all six stress profiles, strict network/SMP/
-Secure evidence and full-audit qualification. Physical VT-d remains a platform
+**Then:** strict network/SMP/Secure evidence and full-audit qualification. Physical VT-d remains a platform
 dependency; independent software work can continue.
 
-**After qualification:** F-1b..F-10, static ABI residuals, native IPC/personality,
-dynamic linking, container networking, telemetry and measured performance.
+**After qualification:** static POSIX baseline, memory and dynamic userspace, event-driven
+servers, containers, then platform work and native IPC/personality (F-1b..F-10).
 These are capability milestones without unsupported calendar commitments.
 
 ## 11. Audit and repair history
@@ -418,10 +419,10 @@ efficiency; QEMU IRTE reuse does not qualify general VM passthrough.
 | Layer | Evidence | Limit |
 | --- | --- | --- |
 | Source/build | fmt/Clippy/lints/ABI C oracle/build/linked usercopy | Not runtime completeness |
-| Hosted | 438 counted executions/profile, CpuLocal doctests, three compile checks | Host-safe allowlist; privileged paths guest-only |
+| Hosted | 616 counted executions/profile, CpuLocal doctests, three compile checks | Host-safe allowlist; privileged paths guest-only |
 | Harness | Python JUnit/coverage, shell syntax, outcome/parser regressions | Host coverage, not kernel instruction coverage |
 | Required QEMU | Boot/runtime/SMP, UP/four-CPU musl, IOMMU/mitigation/KCOV/two-seed smoke | Qualified outcomes/emulator scope retained |
-| Extended | Ubuntu 22.04/24.04, 8/16 CPU, Ext3/JBD2, six stress profiles | Scheduled/manual; stress acceptance incomplete |
+| Extended | Ubuntu 22.04/24.04, 8/16 CPU, Ext3/JBD2, seven stress profiles | Scheduled/manual; stress acceptance incomplete |
 | Campaigns | Eleven scheduled libFuzzer targets, corpus/opaque findings | Sampling is not absence-of-bugs/ABI completeness |
 | Hardware/performance | Named matrix/protocols and future oracles | Physical VT-d/performance/thermal evidence pending |
 
@@ -450,6 +451,7 @@ hardware does not block independent software tasks.
 | 4.x | Unified development/enterprise detail and historical phases |
 | 5.4, September 10 | Intermediate KSA snapshot; later acceptance/older backlog not reconciled |
 | 6.0, September 12 | Restored component/phase/release detail, current gaps/evidence and conserved backlog |
+| 6.2, 2026-11-01 | Corrected futex, thread, hosted-count, CI and stress statements; linked the Linux gap analysis; next group follows plan v16.14 |
 
 [README](https://github.com/Zero-kernel/Nilix/blob/main/README.md) · [Docs](README.md) · [Architecture](architecture.md) ·
 [Nextplan](next-phase-plan.md) · [Security](security-audit-status.md) · [CI](ci-testing.md)

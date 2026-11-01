@@ -1,12 +1,20 @@
 # Security Audit and Qualification Status
 
-**Updated:** 2026-09-14 · **Current source:** local P0-A implementation working tree; remote exact-tree gates recorded in the P0-A validation copy.
+**Updated:** 2026-11-01 · **Current source:** `78dd11a` for the October summary below; the tables keep the evidence dates they state.
 **Release:** 1.0-Preview **BLOCKED**; recorded clean full-audit streak **0/3**.
 
 This document separates historical audit closure, scoped repair evidence and
 current release qualification. It is not a new security audit. Component
 capabilities are in the [roadmap](roadmap.md); remaining work is in the
 [current nextplan](next-phase-plan.md).
+
+## October 2026 summary
+
+| Record | Result | Boundary |
+| --- | --- | --- |
+| R190, R191, R192 | Full and scoped rounds with findings; repairs recorded in private records. Stage 1-3 work is handled outside the plan by user decision | No clean-round credit |
+| QA 2026-10-27 | Shared-COW SIGSEGV root-caused and repaired; 16-CPU Ring-3 and musl pass | 4 of 7 stress profiles QUALIFIED |
+| Audit runs 2026-10-29, 2026-10-31 | Confirmed findings repaired through issues #42, #44 and #48 and PR #49; PR #56 repaired targeted-wait wakeups | Both runs report partial coverage; the latest left three units deferred; no clean-round credit |
 
 ## Current acceptance
 
@@ -34,9 +42,9 @@ public gate definitions or a later exact-tree run.
   verdicts cover a different rubric. Reconcile original IDs to current source/
   independent review and review uncovered rows. Reuse exact accepted overlaps;
   do not claim the entire historical obligation automatically closed.
-- **Stress-v2:** the recorded September 1 user decision requires all six
-  profiles for Preview. MAP_SHARED and durability/workload gaps prevent a full
-  accepted run. Scheduled/diagnostic execution is not release acceptance.
+- **Stress-v2:** the recorded September 1 user decision requires all profiles
+  for Preview, now seven with `thread`. Thread heartbeat gaps, absent `fsync` and
+  missing Ext2 mutation prevent a full accepted run. Scheduled/diagnostic execution is not release acceptance.
 - **Strict profiles and audit cadence:** qualified warnings/deferred/skipped
   outcomes cannot satisfy strict qualification. No new full clean round is
   recorded here, so the 0/3 streak does not advance.

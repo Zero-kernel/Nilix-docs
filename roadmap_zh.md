@@ -1,5 +1,7 @@
 ## Nilix (Zero-OS) — 开发与能力路线图
 
+> **此译本停留在修订 6.0。** 当前内容以英文 [roadmap.md](roadmap.md)（修订 6.2，2026-11-01）与 [Linux 差距分析](linux-gap-analysis-2026-11-01.md) 为准。
+
 **修订：** 6.0 · **更新日期：** 2026-09-12
 **源码基线：** `e127c34`（运行时解析与挂载瞬态修复）；hosted 计数修复等待下一轮完整 CI。
 **现行计划：** [next-phase-plan-2026-09-12.md](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/nextplan/next-phase-plan-2026-09-12.md)
