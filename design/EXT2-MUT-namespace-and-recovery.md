@@ -118,6 +118,29 @@ sparse file offsets. An old object can never lend cached bytes to a reused inode
 also walks resident entries, so sparse multi-GiB offsets do not cause a logical
 page-by-page scan.
 
+## Runtime ownership budgets
+
+The successful post-image mount proof initializes a filesystem-wide count of
+mapping bytes. Runtime allocation preserves the same 64 MiB mapping-work limit;
+all allocated bitmap bits, including structural and journal owners, also remain
+within the 4,194,304-reference admission limit. A missing path is checked as a
+whole (mapping ancestors plus data leaf) before sparse-gap zeroing or mapping
+initialization. Exhausted headroom returns `NoSpace` before those writes;
+existing mapped writes and reclamation remain possible.
+
+The metadata lock serializes admission and commit. Mapping attach/detach changes
+the in-memory count once on success or a known durable commit, including a failed
+checkpoint. An uncommitted failure does not change it. Mount recovery recomputes
+the count from the final ownership proof rather than applying replay deltas.
+Freeing blocks restores both limits. This prevents incremental sparse writes from
+creating an image that exceeds remount or truncate traversal admission.
+
+Local recovery scans only changed inodes in an inode-table home. An unchanged
+neighbor can exceed the local 16 MiB scan limit while remaining valid under the
+full ownership proof's 64 MiB limit; scanning that neighbor again would incorrectly
+reject a valid transaction. Complete pre/post ownership proofs, typed transition
+validation and whole-home preimage checks still cover those unchanged bytes.
+
 ## Validation routes
 
 The hosted VFS and real-image suites cover regular-file and directory namespace lifetimes,
@@ -126,6 +149,12 @@ coalesced inode blocks, inline/block symlink boundaries, every persistence step
 with and without prior unflushed writes retained, interrupted recovery, and
 complete re-signed malformed logs for all new intent kinds. Boot tests sample
 fault boundaries and exercise the production page cache and device path.
+
+The budget regression injects near-limit counters into the existing fault matrix
+and checks zero-write refusal, restored headroom, committed/uncommitted failures
+and mount recomputation. `ext2_growth_budget_oracle.py` adds an independently
+checked real image with more than 16 MiB of neighbor mapping blocks and repeats
+recovery failures at every write/flush boundary.
 
 The `ext2_mut_image` Cargo example in `scripts/tests` runs against an explicit
 disposable mke2fs image and writes only the requested output image. Its recovered
