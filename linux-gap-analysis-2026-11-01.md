@@ -481,6 +481,16 @@ Non-x86 architectures, loadable modules, eBPF, `io_uring`, KVM host, swap, NUMA 
 
 DOC-SYNC and the §8.2 amendments are applied, and `78dd11a` passed CI. ST-K4 is implemented on branch `feat/st-k4-durability` and awaits review and its 900-second run. This document stays a 2026-11-01 snapshot: its tables still show the pre-ST-K4 state.
 
+## Corrections after the snapshot (2026-11-07)
+
+The tables above stay as the 2026-11-01 record. These rows were checked against `main @ f998237`:
+
+| Section | Snapshot text | Current state |
+| --- | --- | --- |
+| §1 item 3, §3, §4.7 | `Ext2Fs` has no `unlink`, `mkdir`, `symlink` or `truncate`; growth stops at 12 direct blocks | EXT2-MUT (#60, #75) added journaled truncate, unlink with orphan recovery, mkdir/rmdir, symlink, single-, double- and triple-indirect allocation and directory growth. Hard links, setattr and FIFOs remain absent |
+| §6.2 | The `block` workload is a refusal stub (`stress_runner.c:1707`); `combined` fails on `combined_open` ENOSYS | `stress_runner.c` runs an fsync-backed block workload with crash and recovery (ST-K4, #57), and the `combined` ENOSYS blocker is resolved. Seven-profile acceptance is tracked in #63 |
+| §6.1 | Hosted test pins total 616 | The pins total 638 per debug/release profile on `f998237` (measured) |
+
 ## 9. References
 
 [Roadmap](roadmap.md) · [Next-phase pointer](next-phase-plan.md) · [Security status](security-audit-status.md) · [CI guide](ci-testing.md) · [Quality gates](quality-gates.md) · [VT-d matrix](vtd-support-matrix.md) · [Livepatch](livepatch-support.md) · [Gap implementation design](design/kernel-gap-implementation-plan-2026-09-13.md)
