@@ -66,7 +66,7 @@ Nilix has sustained stability, performance, and extended SMP tests beyond the co
 gates:
 
 - **QEMU stress soaks — stress-v2** (`scripts/gates/stress/stress_test.sh` + `scripts/gates/stress/stress_protocol.py`)
-  — six in-guest pressure profiles (`memory`, `cpu`, `smp`, `process`, `block`, `combined`)
+  — seven in-guest pressure profiles (`memory`, `cpu`, `smp`, `thread`, `process`, `block`, `combined`)
   driven by a 256-byte `NILSTR2` configuration injected into the ext3 image and validated
   fail-closed against a `NILIX_STRESS_V2_*` serial marker contract, over 60–900 seconds.
   Invoke via `make stress-test` or `make stress-test-extended`; the weekly/manual
