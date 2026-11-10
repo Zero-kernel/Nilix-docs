@@ -71,18 +71,14 @@ gates:
   fail-closed against a `NILIX_STRESS_V2_*` serial marker contract, over 60–900 seconds.
   Invoke via `make stress-test` or `make stress-test-extended`; the weekly/manual
   workflow is `.github/workflows/extended.yml` (Ubuntu 22.04 and 24.04).
-  > **Status: NOT GREEN — do not treat this gate as passing.** It has never completed a
-  > validated run end-to-end. As of 2026-09-02 the build break and two harness defects are
-  > fixed, the in-guest workload (`userspace/stress_runner.c`) is implemented, and the
-  > **nine kernel defects behind the `memory` profile are fixed** (2026-09-02: mmap window
-  > vs identity-map huge pages, debug-boot budget, 16 KiB kernel stacks, fork child
-  > context, child cs/ss, an arch-wide context-switch off-by-8 resume, the wait4 ABI,
-  > two wait-loop blocked-state leaks, and an unvalidated-fork-frame DoS) — the `memory`
-  > profile now runs its full intended shape and stops only at `MAP_SHARED`. Remaining
-  > blockers: `MAP_SHARED` (blocks `memory` + `smp`), no `fsync` (blocks `block`), and
-  > root-cgroup membership for the init task. Full evidence, the reconstructed V2 contract,
-  > the defect table, and the open decisions are in
-  > [`docs/stress-gate-status.md`](stress-gate-status.md).
+  > **Status as of 2026-11-10: profile implementation and full qualification are distinct.**
+  > `MAP_SHARED`, durability syscalls and init root-cgroup registration are implemented;
+  > the September 2 blockers in the historical status record
+  > are not the current source inventory. [Extended run 42590433876](https://github.com/Zero-kernel/Nilix/actions/runs/42590433876)
+  > completed all 14 stress lanes on Ubuntu 22.04/24.04 with phased tracing, preserving
+  > their qualified verdicts. The workflow still failed: fully traced SMP-32 was
+  > INCOMPLETE on both images. These lanes do not establish the separate 16-vCPU
+  > thread acceptance requirement or strict release qualification.
 - **Extended SMP** (`scripts/gates/boot/extended_smp_test.sh`) — validates 8-core and 16-core boot,
   IPI broadcast, and multi-CPU lock contention. Run via `make test-smp-extended`.
 - **Performance regression gate** (`scripts/gates/performance/perf_regression_test.sh`) — framework for

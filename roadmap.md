@@ -1,7 +1,7 @@
 # Nilix (Zero-OS) — Development and Capability Roadmap
 
-**Revision:** 6.2 — **Updated:** 2026-11-01
-**Source baseline:** `78dd11a` for the corrections in revision 6.2; other sections keep the evidence dates they state. The 2026-09-13 remote verification copy remains the historical baseline of the 3.1–3.3 records.
+**Revision:** 6.3 — **Updated:** 2026-11-10
+**Source baseline:** `2b761a3c3b60e60deaa54386e6c0ee650362492a` for the current hosted count, Ext2 mutation capabilities and seven-profile inventory. Revision 6.2 used `78dd11a`; other sections keep the evidence dates they state. The 2026-09-13 remote verification copy remains the historical baseline of the 3.1–3.3 records.
 
 **Active plan:** [next-phase-plan-2026-09-13.md](https://github.com/Zero-kernel/Nilix-docs-private/blob/main/nextplan/next-phase-plan-2026-09-13.md) (v16.14). **Linux comparison:** [gap analysis](linux-gap-analysis-2026-11-01.md).
 
@@ -39,9 +39,9 @@ guest execution measure different things.
 | Composition | 25 kernel library crates plus the entry binary; separate UEFI bootloader, userspace and host tools. Most services execute in Ring 0. |
 | Userspace proof | Static ELF and real musl tests run in Ring 3; fork/exec/wait, descriptors, cwd/jails and several failure paths have guest evidence. |
 | September KSA | KSA-001..020 accepted within recorded rubrics; 17/18 associated plan items complete. P3-2 physical VT-d remains pending. |
-| Hosted gate | 638 counted unit-test executions per debug/release profile (pins in `scripts/tools/hosted_subcrate_tests.sh`), CpuLocal doctests and three test-code compile checks; explicit host-safe allowlist. |
+| Hosted gate | 640 counted unit-test executions per debug/release profile (pins in `scripts/tools/hosted_subcrate_tests.sh`), CpuLocal doctests and three test-code compile checks; explicit host-safe allowlist. |
 | Runtime inventory | 74 source-discovered RuntimeTest implementations; actual pass/deferred/warning/skipped/failed counts depend on image/platform. This is not 100% kernel code coverage. |
-| Recent CI | `CI` passed on the PR #49 merge (`0c7246b`). `Extended tests` has not completed successfully: its last three runs failed or were cancelled at the 3-hour mark. |
+| Recent CI | [PR #88 CI](https://github.com/Zero-kernel/Nilix/actions/runs/42741457121) passed all 15 jobs on the tree merged as `2b761a3`; script tests: 293 passed. [Extended run 42590433876](https://github.com/Zero-kernel/Nilix/actions/runs/42590433876) completed all 14 stress lanes, while fully traced SMP-32 was INCOMPLETE on both Ubuntu images. These records do not establish strict release or 16-vCPU thread qualification. |
 | Release gate | BLOCKED: R186-4 strict qualification, historical review lineage, strict profile qualification, all seven stress profiles and the recorded 0/3 clean-audit streak. |
 
 Acceptance sources: the [historical record ledger](security-audit-status.md#record-provenance)
@@ -423,7 +423,7 @@ efficiency; QEMU IRTE reuse does not qualify general VM passthrough.
 | Layer | Evidence | Limit |
 | --- | --- | --- |
 | Source/build | fmt/Clippy/lints/ABI C oracle/build/linked usercopy | Not runtime completeness |
-| Hosted | 638 counted executions/profile, CpuLocal doctests, three compile checks | Host-safe allowlist; privileged paths guest-only |
+| Hosted | 640 counted executions/profile, CpuLocal doctests, three compile checks | Host-safe allowlist; privileged paths guest-only |
 | Harness | Python JUnit/coverage, shell syntax, outcome/parser regressions | Host coverage, not kernel instruction coverage |
 | Required QEMU | Boot/runtime/SMP, UP/four-CPU musl, IOMMU/mitigation/KCOV/two-seed smoke | Qualified outcomes/emulator scope retained |
 | Extended | Ubuntu 22.04/24.04, 8/16 CPU, Ext3/JBD2, seven stress profiles | Scheduled/manual; stress acceptance incomplete |
