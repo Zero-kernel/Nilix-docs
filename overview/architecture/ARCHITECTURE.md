@@ -752,7 +752,7 @@ Init → Ready → Running → Blocked/Sleeping/Stopped → Zombie → Terminate
 - Handler signal wakes blocked waiter
 - Returns EINTR via per-site bail + under-lock re-check
 - R172-11/12/13: Lost-wakeup fix (re-check after publishing Blocked)
-- Cross-CPU kick: Reschedule IPI broadcast
+- Cross-CPU kick: one reschedule IPI to each CPU whose ready queue holds a woken task (C3, Nilix #90; a broadcast to every CPU before)
 
 **Frame Republish (SLICE 1b-2, DONE)**
 - saved_frame_ptr/owner snapshot at syscall entry
@@ -782,6 +782,12 @@ Init → Ready → Running → Blocked/Sleeping/Stopped → Zombie → Terminate
 - Reschedule IPI: Wake idle CPU or interrupt running task
 - TLB shootdown IPI: INVPCID on remote CPUs
 - Timer tick: Per-CPU, independent
+
+**Blocked waits (C3, Nilix #90):**
+- A task that blocks while its CPU has nothing else to run keeps the CPU; the CPU halts until an interrupt instead of polling (waitqueue, futex, pipe and IPC waits, and `wait4`/`waitid`)
+- A wake of a task whose CPU is halted sends that CPU one reschedule IPI from the waker's next safe point (system-call return or scheduler entry), never under a lock or from an interrupt
+- The idle loops use the same atomic check-and-halt; the periodic tick ends every halt, so no wake waits longer than a tick
+- `/proc/schedstat` reports `wait halts= seq_aborts= kicks= targeted= notified=`
 
 **CPU Affinity:**
 - Per-process `allowed_cpus` bitmask (CLONE_AFFINITY)
