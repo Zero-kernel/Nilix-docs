@@ -417,6 +417,12 @@ delivery. The headline milestone: **a genuine statically-linked musl libc binary
 end-to-end** — crt startup consuming the auxv, musl stdio `printf`→`writev`, and a clean
 `exit(0)` — proven by the `musl-check` conformance gate.
 
+**The CPU number is readable from user space.** Each CPU holds its logical number plus
+one in IA32_TSC_AUX, which the kernel's own per-CPU lookup reads (C3, Nilix #90). RDTSCP
+and RDPID are not privileged and the kernel does not set `CR4.TSD`, so on a CPU that has
+them a user task can read that number, as on Linux. It names the CPU at the time of the
+read; the task may migrate right after.
+
 > M0 is foundational: RLIMIT_NOFILE is enforced, while many other rlimits remain
 > advisory. Dynamic linking (`ld.so`/vDSO), general userspace PIE/ASLR and pthread
 > compatibility are not available. Symlink/readlink/cwd paths exist and have

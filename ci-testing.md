@@ -59,7 +59,7 @@ musl-tools and e2fsprogs on Linux. For Python harness tests, install
 | Optimized hosted allowlist | `HOSTED_TEST_PROFILE=release make test-hosted-subcrates` |
 | Fuzz tools, all fuzz features, host executor | `bash scripts/ci/entrypoint.sh tools` |
 | Normal image and usercopy | `bash scripts/ci/entrypoint.sh build` |
-| UP boot/runtime and four-CPU SMP | `bash scripts/ci/entrypoint.sh runtime` after the build group |
+| UP boot/runtime, four-CPU SMP, and the CPU-identity lookup's RDPID and LAPIC paths | `bash scripts/ci/entrypoint.sh runtime` after the build group |
 | Static musl on one and four CPUs | `bash scripts/ci/entrypoint.sh musl` |
 | Q35 activation, init failures and EDU DMA/MSI | `bash scripts/ci/entrypoint.sh iommu` |
 | Four-CPU CR3/CPL3 proof + BSP clock rate | `bash scripts/ci/entrypoint.sh mitigation` |
@@ -81,9 +81,13 @@ single-shot.
 
 The core CI jobs allow up to 30--90 minutes for build and guest work. Boot,
 runtime/SMP and musl collectors use a 900-second (15-minute) observation window
-per invocation; the runtime group therefore has three sequential 15-minute
-windows. Mitigation, KCOV/fuzz and extended stress also keep their 900-second
-(15-minute) workload windows. The aggregate report has a 15-minute reporting
+per invocation; the runtime group therefore has five sequential 15-minute
+windows: boot, runtime and SMP on the standard CPU model, then the runtime suite
+at four CPUs with `+rdpid,+movbe` and with `-rdtscp`, each required to print
+`CPU identity lookup: rdpid` or `lapic`. (QEMU 8.2's TCG decodes RDPID only when
+MOVBE's CPUID bit is also set.) The standard model of every gate is
+`qemu64,+smep,+smap,+umip,+rdrand,+rdtscp`. Mitigation, KCOV/fuzz and extended
+stress also keep their 900-second (15-minute) workload windows. The aggregate report has a 15-minute reporting
 budget. Extended stress runs use 900 seconds per profile and a 180-minute job
 budget; scheduled fuzz campaigns use up to 900 seconds per target and a
 45-minute job budget.
